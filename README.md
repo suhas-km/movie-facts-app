@@ -25,32 +25,51 @@ A Next.js app that generates AI-powered interesting facts about your favorite mo
    cd movie-facts-app
    npm install
    ```
+2. GCP - Google OAuth:
 
-2. **Set up environment variables**
-   Copy the .env.local.example file to .env.local and fill in the values.
-   ```
-   # .env.local
-   GOOGLE_CLIENT_ID=your_google_client_id
-   GOOGLE_CLIENT_SECRET=your_google_client_secret
-   NEXTAUTH_SECRET=your_nextauth_secret
-   DATABASE_URL=your_postgresql_url
-   OPENAI_API_KEY=your_openai_api_key
-   ```
+    ``` Create a project in the Google Cloud Console and enable the Google+ API.
+    - Go to the Google Cloud Console (https://console.cloud.google.com/)
+    - Create a new project or select an existing project
+    - Enable the Google+ API for your project
+    - Create credentials (OAuth client ID)
+    - Set the authorized redirect URI to http://localhost:3000/api/auth/callback/google
+    - Copy the client ID and client secret
+    - Add the client ID and client secret to the .env.local file
+    ```
 
-3. **Database Setup**
-   ```bash
-   npx prisma generate
-   npx prisma migrate dev --name init
-   ```
+3. PostgreSQL Database:
+    ``` Create a PostgreSQL database and add the connection string to the .env.local file.
+    Docker command to create a PostgreSQL database:
+    docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 
-4. **Run the app**
-   ```bash
-   npm run dev
-   ```
+    DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
+    ```
 
+4. OpenAI API Key:
+    ``` Get an API key from OpenAI and add it to the .env.local file.
+    OPENAI_API_KEY=your_openai_api_key
+    ```
 
-5. **Access the app**
+5. Prisma:
+    ``` Create a Prisma schema and add the connection string to the .env.local file.
+    DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
+    ```
+
+6. NextAuth:
+    ``` Create a NextAuth configuration file and add the connection string to the .env.local file.
+    NEXTAUTH_URL="http://localhost:3000"
+    ```
+
+7. Run the app
+    ```bash
+    npm run dev
+    ```
+
+8. Access the app
+    ```
    Open your browser and navigate to http://localhost:3000
+    ```
+
 
 
 ## App Workflow
@@ -66,7 +85,6 @@ A Next.js app that generates AI-powered interesting facts about your favorite mo
 
 ### 4. Fact Generation
 ![Fact Generation](images/image4.png)
-
 
 ## Testing
 
