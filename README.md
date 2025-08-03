@@ -1,6 +1,8 @@
 # Movie Facts App
 
-A Next.js app that generates AI-powered interesting facts about your favorite movies.
+A Next.js app showcasing a robust OAuth flow with consent management, user info retrieval, and AI-powered content generation. 
+
+It handles user authentication via Google, fetches user profile information, and leverages OpenAI's completions API to generate fresh movie trivia on every page refresh.
 
 ## Features
 
@@ -19,62 +21,106 @@ A Next.js app that generates AI-powered interesting facts about your favorite mo
 
 ## Setup
 
-1. **Clone and install**
-   ```bash
-   git clone https://github.com/suhas-km/movie-facts-app.git
-   cd movie-facts-app
-   npm install
-   ```
-2. GCP - Google OAuth:
+### 1. Clone and Install Dependencies
 
-    ``` Create a project in the Google Cloud Console and enable the Google+ API.
-    - Go to the Google Cloud Console (https://console.cloud.google.com/)
-    - Create a new project or select an existing project
-    - Enable the Google+ API for your project
-    - Create credentials (OAuth client ID)
-    - Set the authorized redirect URI to http://localhost:3000/api/auth/callback/google
-    - Copy the client ID and client secret
-    - Add the client ID and client secret to the .env.local file
-    ```
+```bash
+# Clone the repository
+git clone https://github.com/suhas-km/movie-facts-app.git
+cd movie-facts-app
 
-3. PostgreSQL Database:
-    ``` Create a PostgreSQL database and add the connection string to the .env.local file.
-    Docker command to create a PostgreSQL database:
-    docker run --name postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+# Install base dependencies
+npm install
 
-    DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
-    ```
+# Install additional required packages
+npm install next-auth @next-auth/prisma-adapter
+npm install prisma @prisma/client
+npm install openai
+```
 
-4. OpenAI API Key:
-    ``` Get an API key from OpenAI and add it to the .env.local file.
-    OPENAI_API_KEY=your_openai_api_key
-    ```
+### 2. Set Up PostgreSQL Database
 
-5. Prisma:
-    ``` Create a Prisma schema and add the connection string to the .env.local file.
-    DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
-    ```
+```bash
+# Start PostgreSQL using Docker
+docker run --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
 
-6. NextAuth:
-    ``` Create a NextAuth configuration file and add the connection string to the .env.local file.
-    NEXTAUTH_URL="http://localhost:3000"
-    ```
+# You should see a container ID if successful
+```
 
-7. Run the app
-    ```bash
-    npm run dev
-    ```
+### 3. Configure Environment Variables
 
-8. Access the app
-    ```
-   Open your browser and navigate to http://localhost:3000
-    ```
+Create a `.env.local` file in the root directory with the following variables:
+
+```bash
+# NextAuth Configuration
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+
+# Database Connection
+DATABASE_URL="postgresql://postgres:mysecretpassword@localhost:5432/postgres"
+
+# OpenAI API
+OPENAI_API_KEY=your_openai_api_key
+```
+
+### 4. Set Up Google OAuth with GCP
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Navigate to "APIs & Services" > "Credentials"
+4. Click "Create Credentials" > "OAuth client ID"
+5. Select "Web application" as the application type
+6. Add `http://localhost:3000/api/auth/callback/google` as an authorized redirect URI in the OAuth consent screen
+7. Copy the generated Client ID and Client Secret to your `.env.local` file
+
+### 5. Initialize Prisma
+
+Prisma is a database ORM that provides a type-safe way to interact with the database. It also provides a migration system that allows you to define your database schema in a type-safe way.
+
+```bash
+# Initialize Prisma in your project
+npx prisma init
+
+# Generate Prisma client
+npx prisma generate
+
+# Create and apply initial database migration
+npx prisma migrate dev --name init_nextauth_models
+```
+
+You should see output similar to:
+```bash
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "postgres", schema "public" at "localhost:5432"
+
+Applying migration `20250801195507_init_nextauth_models`
+
+The following migration(s) have been created and applied from new schema changes:
+
+prisma/migrations/
+  └─ 20250801195507_init_nextauth_models/
+    └─ migration.sql
+
+Your database is now in sync with your schema.
+```
+
+### 6. Run the Application
+
+```bash
+npm run dev
+```
+
+### 7. Access the App
+
+Open your browser and navigate to http://localhost:3000
 
 
 
-## App Workflow
+## App Screenshots
 
-### 1. Login Screen
+### 1. Login Screens
 ![Login Screen](images/image1.png)
 
 ### 2. Movie Selection
