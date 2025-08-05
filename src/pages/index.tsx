@@ -58,7 +58,7 @@ export default function HomePage() {
   if (!session) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
-        <h1 className="text-4xl font-bold mb-4 text-gray-100">Welcome to My Movie App!</h1>
+        <h1 className="text-4xl font-bold mb-4 text-gray-100">Welcome to Cinemate!</h1>
         <p className="mb-8 text-gray-300 text-lg">Please sign in to continue.</p>
         <button
           onClick={() => signIn("google")}
