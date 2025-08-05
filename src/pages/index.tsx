@@ -93,7 +93,7 @@ export default function HomePage() {
           />
         )}
         <h1 className="text-4xl font-bold mb-6 text-gray-100">Hi, {session.user.name}!</h1>
-        <p className="mb-8 text-gray-300 text-lg">What's your favorite movie?</p>
+        <p className="mb-8 text-gray-300 text-lg">What&apos;s your favorite movie?</p>
         <form onSubmit={handleSaveMovie} className="flex flex-col gap-6 w-full max-w-md">
           <input
             type="text"
