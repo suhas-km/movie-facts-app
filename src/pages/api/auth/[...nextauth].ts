@@ -16,6 +16,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  useSecureCookies: process.env.NODE_ENV === "production",
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === "production"
+      }
+    }
+  },
   callbacks: {
     async session({ session, user }) {
       // Add user ID and favoriteMovie to session for database operations
@@ -39,7 +51,6 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
-  debug: true,
 };
 
 export default NextAuth(authOptions);

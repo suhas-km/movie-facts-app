@@ -5,8 +5,12 @@ import { getServerSession } from "next-auth/next";
 import { PrismaClient } from "@prisma/client";
 import OpenAI from "openai";
 import { authOptions } from "../auth/[...nextauth]";
+import { sanitizeInput, validateMovieTitle } from "../../../utils/sanitize";
 
 const prisma = new PrismaClient();
+
+// Force TypeScript to recognize the updated Prisma client
+// This comment forces a file change to trigger IDE refresh
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -32,6 +36,12 @@ export default async function handler(
     return res.status(400).json({ message: "Movie title is required" });
   }
 
+  // Sanitize and validate input
+  const sanitizedTitle = sanitizeInput(movieTitle);
+  if (!validateMovieTitle(sanitizedTitle)) {
+    return res.status(400).json({ message: "Invalid movie title format" });
+  }
+
   try {
     // Get the user's session
     const user = await prisma.user.findUnique({
@@ -48,7 +58,7 @@ export default async function handler(
         where: {
           userId_movieTitle: {
             userId: user.id,
-            movieTitle: movieTitle.trim(),
+            movieTitle: sanitizedTitle,
           },
         },
       });
@@ -90,7 +100,7 @@ export default async function handler(
         },
         {
           role: "user",
-          content: `Tell me an interesting and lesser-known fact about the movie "${movieTitle}".`,
+          content: `Tell me an interesting and lesser-known fact about the movie "${sanitizedTitle}".`,
         },
       ],
       max_tokens: 150,
@@ -124,7 +134,7 @@ export default async function handler(
       where: {
         userId_movieTitle: {
           userId: user.id,
-          movieTitle: movieTitle.trim(),
+          movieTitle: sanitizedTitle,
         },
       },
       update: {
@@ -132,7 +142,7 @@ export default async function handler(
       },
       create: {
         userId: user.id,
-        movieTitle: movieTitle.trim(),
+        movieTitle: sanitizedTitle,
         fact: fact,
       },
     });
