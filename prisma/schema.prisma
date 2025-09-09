@@ -39,12 +39,39 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
-  favoriteMovie String?   // Add this field for the user's movie
+  favoriteMovie String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  movieFacts    MovieFact[]
+  rateLimits    RateLimit[]
   accounts      Account[]
   sessions      Session[]
+}
+
+model MovieFact {
+  id        String   @id @default(cuid())
+  userId    String
+  movieTitle String
+  fact      String   @db.Text
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, movieTitle])
+}
+
+model RateLimit {
+  id        String   @id @default(cuid())
+  userId    String
+  date      String   // YYYY-MM-DD format
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, date])
 }
 
 model VerificationToken {

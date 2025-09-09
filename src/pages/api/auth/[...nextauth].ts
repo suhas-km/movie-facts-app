@@ -19,16 +19,27 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({ session, user }) {
       // Add user ID and favoriteMovie to session for database operations
-      if (user) {
-        session.user = {
-          ...session.user,
-          id: user.id,
-          favoriteMovie: user.favoriteMovie,
-        };
+      try {
+        if (user && session.user?.email) {
+          // Fetch the full user data from database
+          const dbUser = await prisma.user.findUnique({
+            where: { email: session.user.email },
+          });
+          
+          session.user = {
+            ...session.user,
+            id: user.id,
+            favoriteMovie: dbUser?.favoriteMovie || null,
+          };
+        }
+        return session;
+      } catch (error) {
+        console.error("Session callback error:", error);
+        return session;
       }
-      return session;
     },
   },
+  debug: true,
 };
 
 export default NextAuth(authOptions);

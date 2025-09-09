@@ -1,0 +1,24 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" rx="6" fill="#292524"/>
+  <g fill="white">
+    <!-- Film strip holes -->
+    <rect x="3" y="6" width="2" height="2" rx="1"/>
+    <rect x="3" y="10" width="2" height="2" rx="1"/>
+    <rect x="3" y="14" width="2" height="2" rx="1"/>
+    <rect x="3" y="18" width="2" height="2" rx="1"/>
+    <rect x="3" y="22" width="2" height="2" rx="1"/>
+    
+    <rect x="27" y="6" width="2" height="2" rx="1"/>
+    <rect x="27" y="10" width="2" height="2" rx="1"/>
+    <rect x="27" y="14" width="2" height="2" rx="1"/>
+    <rect x="27" y="18" width="2" height="2" rx="1"/>
+    <rect x="27" y="22" width="2" height="2" rx="1"/>
+    
+    <!-- Film strip lines -->
+    <rect x="6" y="4" width="20" height="1"/>
+    <rect x="6" y="27" width="20" height="1"/>
+    
+    <!-- Play button -->
+    <polygon points="12,10 12,22 22,16"/>
+  </g>
+</svg>
