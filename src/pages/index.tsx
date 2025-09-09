@@ -59,6 +59,7 @@ export default function HomePage() {
         }
       }
     } catch (error) {
+      console.error('Failed to fetch movie fact:', error);
       setMovieFact("Failed to fetch movie fact.");
     }
     setIsLoadingFact(false);
@@ -87,6 +88,7 @@ export default function HomePage() {
         setIsSubmitting(false);
       }
     } catch (error) {
+      console.error('Failed to save movie:', error);
       alert("Failed to save movie.");
       setIsSubmitting(false);
     }
@@ -110,6 +112,7 @@ export default function HomePage() {
         alert("Failed to remove movie.");
       }
     } catch (error) {
+      console.error('Failed to remove movie:', error);
       alert("Failed to remove movie.");
     }
     setIsManagingMovies(false);
@@ -136,6 +139,7 @@ export default function HomePage() {
         alert("Failed to add movies.");
       }
     } catch (error) {
+      console.error('Failed to add movies:', error);
       alert("Failed to add movies.");
     }
     setIsManagingMovies(false);
@@ -218,7 +222,7 @@ export default function HomePage() {
                   <div className="w-1/2 pl-12">
                     <div className="bg-stone-100 p-6 rounded-2xl border border-stone-200">
                       <div className="text-stone-500 text-sm mb-2">Example Discovery</div>
-                      <div className="text-stone-800 font-medium">"The Matrix's green code was actually sushi recipes"</div>
+                      <div className="text-stone-800 font-medium">&ldquo;The Matrix&apos;s green code was actually sushi recipes&rdquo;</div>
                     </div>
                   </div>
                 </div>
@@ -333,7 +337,7 @@ Explore Cinema
           </h1>
           
           <p className="mb-12 text-stone-600 text-xl leading-relaxed">
-            Let's start your cinematic journey. What's your favorite movie?
+            Let&apos;s start your cinematic journey. What&apos;s your favorite movie?
           </p>
           
           {showSuccess && (
@@ -540,9 +544,9 @@ Explore Cinema
 
           {selectedMovie && (
             <div className="bg-stone-50 p-6 rounded-lg border border-stone-200 mb-8">
-              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="flex items-center justify-center gap-2 mb-4">
                 <span className="text-2xl">🎭</span>
-                <h3 className="text-xl font-semibold text-stone-800">Behind the Scenes of "{selectedMovie}"</h3>
+                <h3 className="text-xl font-semibold text-stone-800">Behind the Scenes of &ldquo;{selectedMovie}&rdquo;</h3>
                 {isCached && (
                   <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full ml-2">
                     💾 Cached
@@ -562,8 +566,8 @@ Explore Cinema
               ) : (
                 <div className="relative">
                   <p className="text-stone-700 leading-relaxed text-lg">{movieFact}</p>
-                  <div className="absolute -top-2 -left-2 text-4xl text-stone-300">"</div>
-                  <div className="absolute -bottom-2 -right-2 text-4xl text-stone-300">"</div>
+                  <div className="absolute -top-2 -left-2 text-4xl text-stone-300">&ldquo;</div>
+                  <div className="absolute -bottom-2 -right-2 text-4xl text-stone-300">&rdquo;</div>
                 </div>
               )}
             </div>

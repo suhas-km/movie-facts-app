@@ -5,7 +5,6 @@ import { getServerSession } from "next-auth/next";
 import { PrismaClient } from "@prisma/client";
 import OpenAI from "openai";
 import { authOptions } from "../auth/[...nextauth]";
-import type { Session } from "next-auth";
 
 const prisma = new PrismaClient();
 
@@ -14,12 +13,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-interface CustomSession extends Session {
-  user: {
-    id: string;
-    favoriteMovie?: string | null;
-  } & Session["user"];
-}
 
 export default async function handler(
   req: NextApiRequest,

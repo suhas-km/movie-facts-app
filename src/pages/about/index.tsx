@@ -1,10 +1,11 @@
 // src/pages/about/about.tsx
 import React from 'react';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 export default function AboutPage() {
-  const { data: session } = useSession();
+  // Remove unused session variable
+  // const { data: session } = useSession();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 p-8">
@@ -51,7 +52,7 @@ export default function AboutPage() {
           <h2 className="text-2xl font-semibold mb-4 text-gray-200">Key Features</h2>
           <ul className="list-disc pl-6 space-y-2 text-gray-300">
             <li><span className="font-semibold">Authentication:</span> Secure login with Google OAuth 2.0</li>
-            <li><span className="font-semibold">User Profiles:</span> Store and display user's favorite movie</li>
+            <li><span className="font-semibold">User Profiles:</span> Store and display user&apos;s favorite movie</li>
             <li><span className="font-semibold">AI Movie Facts:</span> Generate interesting facts about movies using OpenAI</li>
             <li><span className="font-semibold">Responsive Design:</span> Optimized for all device sizes</li>
             <li><span className="font-semibold">Type Safety:</span> End-to-end TypeScript implementation</li>
