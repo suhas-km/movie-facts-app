@@ -146,13 +146,39 @@ export default function HomePage() {
   };
 
   if (status === "loading") {
+    // Show the landing page immediately while session loads in background
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800">
-        <div className="relative">
-          <div className="w-16 h-16 border-4 border-gray-600 border-t-gray-300 rounded-full animate-spin"></div>
-          <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-blue-500 rounded-full animate-spin" style={{animationDelay: '0.15s'}}></div>
+      <div className="min-h-screen bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50 transition-all duration-500">
+        {/* Navigation */}
+        <nav className="fixed top-0 left-0 right-0 z-50 p-6 bg-gradient-to-br from-stone-50/95 via-white/95 to-stone-100/95 backdrop-blur-md border-b border-stone-200/50">
+          <div className="flex items-center justify-between max-w-7xl mx-auto">
+            <Logo size="md" variant="dark" />
+            <div className="bg-stone-800 text-white px-6 py-2.5 rounded-lg font-medium opacity-50 cursor-not-allowed">
+              Loading...
+            </div>
+          </div>
+        </nav>
+
+        {/* Hero Section */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-32">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center gap-2 bg-stone-200/50 backdrop-blur-sm px-4 py-2 rounded-lg text-stone-700 text-sm font-medium mb-8">
+              AI-Powered Movie Discovery
+            </div>
+            
+            <h1 className="text-6xl md:text-7xl font-bold text-stone-900 mb-6 leading-tight">
+              Your Personal
+              <span className="block bg-gradient-to-r from-stone-600 to-stone-800 bg-clip-text text-transparent">
+                Cinema Companion
+              </span>
+            </h1>
+            
+            <p className="text-xl text-stone-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Discover fascinating AI-generated facts about your favorite movies. 
+              From behind-the-scenes secrets to production trivia, unlock the stories behind the stories.
+            </p>
+          </div>
         </div>
-        <p className="mt-6 text-gray-300 text-lg animate-pulse">Loading your cinema experience...</p>
       </div>
     );
   }
@@ -160,7 +186,7 @@ export default function HomePage() {
   // Not logged in - Modern Product Landing Page
   if (!session) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-stone-100 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-stone-50 via-white to-stone-100 relative overflow-hidden transition-all duration-700 ease-in-out">
         {/* Background Elements */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-br from-stone-200 to-stone-300 rounded-full blur-3xl animate-pulse"></div>
@@ -319,7 +345,7 @@ Explore Cinema
           </button>
         </nav>
         
-        <div className="text-center max-w-lg mx-auto px-6">
+        <div className="text-center max-w-4xl mx-auto px-6">
           {session.user.image && (
             <div className="relative mb-8">
               <Image
@@ -332,11 +358,11 @@ Explore Cinema
             </div>
           )}
           
-          <h1 className="text-5xl font-bold mb-4 text-stone-800">
+          <h1 className="text-5xl font-bold mb-4 text-stone-800 whitespace-nowrap">
             Welcome, {session.user.name}!
           </h1>
           
-          <p className="mb-12 text-stone-600 text-xl leading-relaxed">
+          <p className="mb-12 text-stone-600 text-xl leading-relaxed whitespace-nowrap">
             Let&apos;s start your cinematic journey. What&apos;s your favorite movie?
           </p>
           
@@ -354,16 +380,15 @@ Explore Cinema
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <div className="flex-1 relative group">
+                <div className="flex-1">
                   <input
                     type="text"
                     value={movieInput}
                     onChange={(e) => setMovieInput(e.target.value)}
                     placeholder="Enter your favorite movie..."
-                    className="w-full px-4 py-3 bg-white border border-stone-300 rounded-lg text-stone-800 placeholder-stone-600 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:border-transparent transition-all duration-300 group-hover:border-stone-400"
+                    className="w-full px-4 py-3 bg-white hover:bg-stone-50 border border-stone-300 hover:border-stone-400 rounded-lg text-stone-800 placeholder-stone-500 hover:placeholder-stone-600 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-stone-500 focus:bg-white transition-all duration-200"
                     disabled={isSubmitting}
                   />
-                  <div className="absolute inset-0 bg-stone-100 rounded-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"></div>
                 </div>
                 
                 <button
@@ -403,7 +428,17 @@ Explore Cinema
 
   // Logged in with favorite movie
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50">
+    <div className="min-h-screen bg-gradient-to-br from-stone-200 via-stone-100 to-stone-50 transition-all duration-700 ease-in-out">
+      {/* Daily AI Calls Counter - Fixed Position */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <div className="bg-white/90 backdrop-blur-sm border border-stone-300 px-4 py-2 rounded-full shadow-lg">
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-stone-600">AI calls:</span>
+            <span className="font-bold text-stone-800">{remainingCalls}/10</span>
+          </div>
+        </div>
+      </div>
+
       {/* Enhanced Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 p-6 bg-gradient-to-br from-stone-50/95 via-white/95 to-stone-100/95 backdrop-blur-md border-b border-stone-200/50">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
@@ -417,76 +452,85 @@ Explore Cinema
         </div>
       </nav>
 
-      <div className="max-w-4xl mx-auto pt-24 px-4">
-        <div className="text-center mb-8">
+      <div className="max-w-5xl mx-auto pt-32 px-6">
+        <div className="text-center mb-16">
           {session.user.image && (
-            <div className="relative mb-6">
+            <div className="relative mb-8">
               <Image
                 src={session.user.image}
                 alt="User Photo"
-                width={120}
-                height={120}
+                width={100}
+                height={100}
                 className="rounded-full mx-auto border-4 border-stone-300 shadow-xl"
               />
             </div>
           )}
           
-          <h1 className="text-4xl font-bold mb-2 text-stone-800">
+          <h1 className="text-3xl font-bold mb-4 text-stone-800">
             Welcome back, {session.user.name}!
           </h1>
-            {/* Display favorite movies as enhanced tags */}
-            {session.user.favoriteMovie && (
-              <div className="mb-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-1 h-8 bg-stone-400 rounded-full"></div>
-                  <h3 className="text-2xl font-bold text-stone-800">Your Favorite Movies</h3>
-                  <div className="flex-1 h-px bg-stone-300"></div>
-                </div>
+        </div>
+
+        {/* Two Column Layout: Movies List + Facts Panel */}
+        {session.user.favoriteMovie && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12 animate-in fade-in duration-500">
                 
-                <div className="grid gap-4 mb-6">
-                  {session.user.favoriteMovie.split(',').map((movie: string, index: number) => (
-                    <div key={index} className="group relative bg-white p-6 rounded-lg border border-stone-200 hover:border-stone-300 transition-all duration-300 shadow-sm hover:shadow-md">
-                      <button
-                        onClick={() => handleRemoveMovie(movie.trim())}
-                        disabled={isManagingMovies}
-                        className="absolute top-2 right-2 w-6 h-6 bg-red-100 hover:bg-red-200 text-red-600 rounded-full flex items-center justify-center text-xs transition-all duration-200 opacity-0 group-hover:opacity-100 disabled:opacity-50"
-                        title="Remove movie"
-                      >
-                        ×
-                      </button>
-                      
-                      <div 
-                        onClick={() => fetchMovieFact(movie.trim())}
-                        className="cursor-pointer"
-                      >
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="w-2 h-2 bg-stone-400 rounded-full"></div>
-                          <span className="text-lg font-semibold text-stone-800 group-hover:text-stone-900 transition-colors duration-300 pr-8">
-                            {movie.trim()}
-                          </span>
-                        </div>
-                        <div className="text-sm text-stone-600 group-hover:text-stone-700 transition-colors duration-300">
-                          🎬 Click for AI facts
+            {/* Left Column: Movie List */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-1 h-8 bg-stone-400 rounded-full"></div>
+                <h3 className="text-2xl font-bold text-stone-800">Your Movies</h3>
+              </div>
+              
+              <div className="space-y-3">
+                    {session.user.favoriteMovie.split(',').map((movie: string, index: number) => (
+                      <div key={index} className={`group relative bg-white p-4 rounded-lg border transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer ${
+                        selectedMovie === movie.trim() 
+                          ? 'border-stone-400 bg-stone-50' 
+                          : 'border-stone-200 hover:border-stone-300'
+                      }`}>
+                        <button
+                          onClick={() => handleRemoveMovie(movie.trim())}
+                          disabled={isManagingMovies}
+                          className="absolute top-2 right-2 w-6 h-6 bg-red-100 hover:bg-red-200 text-red-600 rounded-full flex items-center justify-center text-xs transition-all duration-200 opacity-0 group-hover:opacity-100 disabled:opacity-50"
+                          title="Remove movie"
+                        >
+                          ×
+                        </button>
+                        
+                        <div 
+                          onClick={() => fetchMovieFact(movie.trim())}
+                          className="pr-8"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`w-2 h-2 rounded-full ${
+                              selectedMovie === movie.trim() ? 'bg-stone-600' : 'bg-stone-400'
+                            }`}></div>
+                            <span className={`text-lg font-semibold transition-colors duration-300 ${
+                              selectedMovie === movie.trim() 
+                                ? 'text-stone-900' 
+                                : 'text-stone-800 group-hover:text-stone-900'
+                            }`}>
+                              {movie.trim()}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
                 
                 {/* Add More Movies Button */}
-                <div className="mt-6 text-center">
+                <div className="pt-4">
                   <button
                     onClick={() => setShowAddMovies(!showAddMovies)}
-                    className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-500 font-medium shadow-md hover:shadow-lg transform ${
+                    className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg ${
                       showAddMovies 
-                        ? 'bg-red-600 hover:bg-red-700 text-white scale-105' 
+                        ? 'bg-stone-500 hover:bg-stone-600 text-white border border-stone-400 hover:border-stone-500' 
                         : 'bg-stone-600 hover:bg-stone-700 text-white'
                     }`}
                   >
-                    <span className={`text-lg transition-transform duration-300 ${
-                      showAddMovies ? 'rotate-45' : 'rotate-0'
-                    }`}>
-                      {showAddMovies ? '✕' : '+'}
+                    <span className="text-lg">
+                      {showAddMovies ? '−' : '+'}
                     </span>
                     <span>{showAddMovies ? 'Cancel' : 'Add More Movies'}</span>
                   </button>
@@ -494,7 +538,7 @@ Explore Cinema
                 
                 {/* Add Movies Form */}
                 {showAddMovies && (
-                  <div className="mt-6 bg-stone-100 p-6 rounded-lg border border-stone-200">
+                  <div className="bg-stone-50 p-6 rounded-lg border border-stone-200 shadow-sm">
                     <form onSubmit={handleAddMovies} className="space-y-4">
                       <div>
                         <label className="block text-sm font-medium text-stone-700 mb-2">
@@ -505,87 +549,191 @@ Explore Cinema
                           value={newMoviesInput}
                           onChange={(e) => setNewMoviesInput(e.target.value)}
                           placeholder="e.g., The Matrix, Inception, Interstellar"
-                          className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-all duration-300 bg-white placeholder-stone-600"
+                          className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-all duration-300 bg-white text-stone-900 placeholder-stone-500"
                           disabled={isManagingMovies}
                         />
                       </div>
-                      <div className="flex gap-3">
-                        <button
-                          type="submit"
-                          disabled={!newMoviesInput.trim() || isManagingMovies}
-                          className="flex-1 bg-stone-600 hover:bg-stone-700 disabled:bg-stone-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                        >
-                          {isManagingMovies ? (
-                            <>
-                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                              <span>Adding...</span>
-                            </>
-                          ) : (
-                            <>
-                              <span>🎬</span>
-                              <span>Add Movies</span>
-                            </>
-                          )}
-                        </button>
-                      </div>
+                      <button
+                        type="submit"
+                        disabled={!newMoviesInput.trim() || isManagingMovies}
+                        className="w-full bg-stone-600 hover:bg-stone-700 disabled:bg-stone-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                      >
+                        <span>🎬</span>
+                        <span>{isManagingMovies ? 'Adding...' : 'Add Movies'}</span>
+                      </button>
                     </form>
                   </div>
                 )}
+            </div>
+
+                {/* Right Column: Facts Panel */}
+            <div className="lg:sticky lg:top-24 lg:h-fit">
+              <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-md min-h-[400px] flex flex-col">
+                {selectedMovie ? (
+                  <>
+                    <div className="flex items-center justify-center gap-2 mb-6">
+                      <span className="text-2xl">🎭</span>
+                      <h3 className="text-xl font-semibold text-stone-800">Behind the Scenes</h3>
+                      {isCached && (
+                        <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full ml-2 font-medium">
+                          💾 Cached
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="text-center mb-6">
+                      <h4 className="text-lg font-medium text-stone-700">&ldquo;{selectedMovie}&rdquo;</h4>
+                    </div>
+                    
+                    <div className="flex-1 flex flex-col">
+                      <div className={`relative flex-1 mb-6 bg-stone-50 p-4 rounded-lg transition-all duration-500 ${isLoadingFact ? 'opacity-50' : 'opacity-100'}`}>
+                        <p className="text-stone-700 leading-relaxed">
+                          {movieFact || "Click 'New Fact' to discover fascinating insights about this movie..."}
+                        </p>
+                        <div className="absolute -top-1 -left-1 text-3xl text-stone-300 opacity-60">&ldquo;</div>
+                        <div className="absolute -bottom-2 -right-1 text-3xl text-stone-300 opacity-60">&rdquo;</div>
+                      </div>
+                      
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => fetchMovieFact(selectedMovie, true)}
+                          disabled={remainingCalls <= 0 || isLoadingFact}
+                          className={`bg-stone-600 hover:bg-stone-700 disabled:bg-stone-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg ${isLoadingFact ? 'animate-pulse' : ''}`}
+                        >
+                          🎲 {isLoadingFact ? 'Generating...' : 'New Fact'} {remainingCalls <= 0 && "(Limit Reached)"}
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex-1 flex flex-col items-center justify-center text-center py-8">
+                    <div className="text-6xl mb-4 opacity-40">🎬</div>
+                    <h3 className="text-xl font-semibold text-stone-700 mb-2">Select a Movie</h3>
+                    <p className="text-stone-600 leading-relaxed max-w-sm">Click on any movie from your list to discover fascinating AI-generated facts and behind-the-scenes stories.</p>
+                  </div>
+                )}
               </div>
-            )}
-            
-          {/* Rate limit display */}
-          <div className="mb-6 text-center">
-            <div className="inline-flex items-center gap-2 bg-stone-100 px-4 py-2 rounded-lg border border-stone-200">
-              <span className="text-stone-600 text-sm">Daily AI calls remaining:</span>
-              <span className="font-bold text-stone-800">{remainingCalls}/10</span>
+            </div>
+          </div>
+        )}
+        
+      </div>
+
+      {/* Professional Footer */}
+      <footer className="bg-stone-800 text-stone-200 mt-16">
+        <div className="max-w-5xl mx-auto px-6 py-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Brand Section */}
+            <div className="md:col-span-2">
+              <div className="mb-4">
+                <Logo size="lg" variant="light" />
+              </div>
+              <p className="text-stone-400 leading-relaxed mb-6 max-w-md">
+                Discover fascinating AI-generated facts about your favorite movies. 
+                Powered by OpenAI and built with modern web technologies.
+              </p>
+              <div className="flex space-x-4">
+                <a href="https://github.com/suhaskm" className="text-stone-400 hover:text-white transition-colors duration-200" title="GitHub">
+                  <span className="sr-only">GitHub</span>
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+                <a href="https://linkedin.com/in/suhaskm" className="text-stone-400 hover:text-white transition-colors duration-200" title="LinkedIn">
+                  <span className="sr-only">LinkedIn</span>
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                <a href="https://medium.com/@suhaskm" className="text-stone-400 hover:text-white transition-colors duration-200" title="Medium">
+                  <span className="sr-only">Medium</span>
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+                  </svg>
+                </a>
+                <a href="https://suhas.page" className="text-stone-400 hover:text-white transition-colors duration-200" title="Portfolio">
+                  <span className="sr-only">Portfolio</span>
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            {/* Connect */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Connect</h3>
+              <ul className="space-y-3">
+                <li>
+                  <a href="https://github.com/suhas-km" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    GitHub Projects
+                  </a>
+                </li>
+                <li>
+                  <a href="https://suhas.page/" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    Portfolio
+                  </a>
+                </li>
+                <li>
+                  <a href="https://medium.com/@suhaskm" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    Medium Articles
+                  </a>
+                </li>
+                <li>
+                  <a href="https://linkedin.com/in/suhaskm" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    LinkedIn Profile
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Resources</h3>
+              <ul className="space-y-3">
+                <li>
+                  <a href="https://nextjs.org" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    Next.js
+                  </a>
+                </li>
+                <li>
+                  <a href="https://openai.com" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    OpenAI
+                  </a>
+                </li>
+                <li>
+                  <a href="https://prisma.io" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    Prisma
+                  </a>
+                </li>
+                <li>
+                  <a href="https://tailwindcss.com" className="text-stone-400 hover:text-white transition-colors duration-200">
+                    Tailwind CSS
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
 
-          {selectedMovie && (
-            <div className="bg-stone-50 p-6 rounded-lg border border-stone-200 mb-8">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                <span className="text-2xl">🎭</span>
-                <h3 className="text-xl font-semibold text-stone-800">Behind the Scenes of &ldquo;{selectedMovie}&rdquo;</h3>
-                {isCached && (
-                  <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full ml-2">
-                    💾 Cached
-                  </span>
-                )}
-              </div>
-              
-              {isLoadingFact ? (
-                <div className="flex flex-col items-center gap-4">
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 bg-stone-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-stone-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                    <div className="w-2 h-2 bg-stone-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                  </div>
-                  <p className="text-stone-600">Generating fascinating facts...</p>
-                </div>
-              ) : (
-                <div className="relative">
-                  <p className="text-stone-700 leading-relaxed text-lg">{movieFact}</p>
-                  <div className="absolute -top-2 -left-2 text-4xl text-stone-300">&ldquo;</div>
-                  <div className="absolute -bottom-2 -right-2 text-4xl text-stone-300">&rdquo;</div>
-                </div>
-              )}
+          {/* Bottom Bar */}
+          <div className="border-t border-stone-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-stone-400 text-sm">
+              © 2025 Suhas K M. All rights reserved.
+            </p>
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a href="mailto:contact@suhaskm@gmail.com" className="text-stone-400 hover:text-white text-sm transition-colors duration-200">
+                Say Hello
+              </a>
+              <a href="https://www.suhas.page/#projects" className="text-stone-400 hover:text-white text-sm transition-colors duration-200">
+                More Projects
+              </a>
+              <a href="https://github.com/suhaskm/movie-facts-app" className="text-stone-400 hover:text-white text-sm transition-colors duration-200">
+                Source Code
+              </a>
             </div>
-          )}
-
-          {selectedMovie && (
-            <div className="flex gap-4 justify-center">
-              <button
-                onClick={() => fetchMovieFact(selectedMovie, true)}
-                disabled={remainingCalls <= 0}
-                className="bg-stone-600 hover:bg-stone-700 disabled:bg-stone-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg"
-              >
-                🎲 New Fact {remainingCalls <= 0 && "(Limit Reached)"}
-              </button>
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
