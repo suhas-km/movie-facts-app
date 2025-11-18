@@ -2,7 +2,7 @@
 
 🚀 **[Live Demo](https://movie-facts-app.vercel.app/)** | 📖 **[Technical Deep Dive](https://medium.com/@suhaskm/how-i-integrated-google-oauth-2-0-with-next-js-supabase-and-openai-881450cc9c6c)**
 
-A Next.js app showcasing a robust OAuth flow with consent management, user info retrieval, and AI-powered content generation. 
+A Next.js app showcasing a robust OAuth flow with consent management, user info retrieval, and AI-powered Movie Trivia and content generation. 
 
 It handles user authentication via Google, fetches user profile information, and leverages OpenAI's completions API to generate fresh movie trivia on every page refresh.
 
